@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-reactions = new mongoose.Schema({
+reactionSchema = new mongoose.Schema({
   //reaction id
   reactionBody: {
     type: String,
@@ -16,3 +16,5 @@ reactions = new mongoose.Schema({
     createdAt: Date.now,
   },
 });
+
+module.exports = reactionSchema;
