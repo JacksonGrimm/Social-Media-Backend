@@ -1,14 +1,14 @@
 const connection = require("../config/connection");
 const { User, Thought } = require("../models");
-const thought = require("../models/thought");
-const { userNames, emails } = require("./data");
+const { userNames, emails, posts } = require("./data");
 const userArr = [];
+const postArr = [];
 
 //creates array of users objects
 const newUser = (userArr) => {
   for (let i = 0; i < userNames.length; i++) {
-    username = userNames[i];
-    email = emails[i];
+    let username = userNames[i];
+    let email = emails[i];
     userArr.push({
       username: username,
       email: email,
@@ -17,15 +17,28 @@ const newUser = (userArr) => {
   return userArr;
 };
 
+const newPosts = (postArr) => {
+  for (let i = 0; i < posts.length; i++) {
+    let username = userNames[i];
+    let post = posts[i];
+    postArr.push({
+      username: username,
+      thoughtText: post,
+    });
+  }
+  return postArr;
+};
+
 connection.once("open", async () => {
   //attempts to delete collections if it exists.
   try {
     await User.collection.drop();
-    await thought.collection.drop();
+    await Thought.collection.drop();
   } catch (error) {
     await User.deleteMany({});
     await Thought.deleteMany({});
   }
   //creates users;
   await User.insertMany(newUser(userArr));
+  await Thought.insertMany(newPosts(postArr));
 });
