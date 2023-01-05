@@ -36,6 +36,6 @@ thoughtSchema.virtual("dateFormat").get(() => {
   return this.createdAt.toLocalDateString("en-US");
 });
 
-const thought = mongoose.model("thought", thoughtSchema);
+const Thought = mongoose.model("thought", thoughtSchema);
 
-module.exports = thought;
+module.exports = Thought;
