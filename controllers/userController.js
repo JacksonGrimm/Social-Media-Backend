@@ -5,7 +5,7 @@ module.exports = {
   //returns all documents in the user collection
   async getAllUsers(req, res) {
     try {
-      const users = await User.find().populate("friends");
+      const users = await User.find().populate("friends").populate("thoughts");
       res.status(200).json(users);
     } catch (error) {
       console.log(error);
@@ -14,7 +14,9 @@ module.exports = {
   },
   async getOneUser(req, res) {
     try {
-      const user = await User.find({ _id: req.params.id });
+      const user = await User.find({ _id: req.params.id })
+        .populate("friends")
+        .populate("thoughts");
       res.status(200).json(user);
     } catch (error) {
       console.log(error);

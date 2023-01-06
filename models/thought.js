@@ -11,7 +11,7 @@ const thoughtSchema = new mongoose.Schema(
     },
     createdAt: {
       type: Date,
-      createdAt: Date.now,
+      default: Date.now(),
       //need to format the time :(
     },
     username: {
@@ -28,12 +28,12 @@ const thoughtSchema = new mongoose.Schema(
   }
 );
 
-thoughtSchema.virtual("reactionCount").get(() => {
+thoughtSchema.virtual("reactionCount").get(function () {
   return this.reactions.length;
 });
 
-thoughtSchema.virtual("dateFormat").get(() => {
-  return this.createdAt.toLocalDateString("en-US");
+thoughtSchema.virtual("dateFormat").get(function () {
+  return this.createdAt.toString();
 });
 
 const Thought = mongoose.model("thought", thoughtSchema);
