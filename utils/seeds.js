@@ -23,9 +23,11 @@ const newPosts = (postArr) => {
   for (let i = 0; i < posts.length; i++) {
     let username = userNames[i];
     let post = posts[i];
+    let reaction = postReaction();
     postArr.push({
       username: username,
       thoughtText: post,
+      reactions: reaction,
     });
   }
   return postArr;
@@ -86,9 +88,15 @@ const seedPostsToUsers = async () => {
   } catch (error) {}
 };
 
-// const seedPostsToUsers = async () => {
-//   try {
-//     const thoughts = await Thought.find({});
-//     console.log(thoughts[0]);
-//   } catch (error) {}
-// };
+//seeds Reactions
+const postReaction = () => {
+  const reactionArr = [];
+  for (let i = 0; i < userNames.length; i++) {
+    currentUser = userNames[i];
+    reactionArr.push({
+      username: currentUser,
+      reactionBody: "Thats Awesome!!",
+    });
+  }
+  return reactionArr;
+};
