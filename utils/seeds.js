@@ -1,5 +1,6 @@
 const connection = require("../config/connection");
 const { User, Thought } = require("../models");
+const { Types } = require("mongoose");
 const { userNames, emails, posts } = require("./data");
 const userArr = [];
 const postArr = [];
@@ -12,7 +13,6 @@ const newUser = (userArr) => {
     userArr.push({
       username: username,
       email: email,
-      friends: [],
     });
   }
   return userArr;
@@ -42,4 +42,25 @@ connection.once("open", async () => {
   //creates users;
   await Thought.insertMany(newPosts(postArr));
   await User.insertMany(newUser(userArr));
+  seedFriend();
 });
+
+//seeds for each users friend
+const seedFriend = async () => {
+  try {
+    //grabs the userGoblinKing20
+    const friendData = await User.findOne({ username: "GoblinKing20" });
+    //grabs updates all users and pushes the friend ID to the friends array
+    const users = await User.updateMany(
+      {},
+      {
+        $push: {
+          friends: Types.ObjectId(friendData._id),
+        },
+      }
+    );
+  } catch (error) {
+    console.log("error");
+    console.log(error);
+  }
+};
