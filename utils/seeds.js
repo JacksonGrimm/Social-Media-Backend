@@ -12,6 +12,7 @@ const newUser = (userArr) => {
     userArr.push({
       username: username,
       email: email,
+      friends: [],
     });
   }
   return userArr;
