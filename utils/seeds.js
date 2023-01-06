@@ -39,6 +39,6 @@ connection.once("open", async () => {
     await Thought.deleteMany({});
   }
   //creates users;
-  await User.insertMany(newUser(userArr));
   await Thought.insertMany(newPosts(postArr));
+  await User.insertMany(newUser(userArr));
 });
